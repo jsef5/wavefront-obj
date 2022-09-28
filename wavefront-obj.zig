@@ -1,15 +1,15 @@
 const std = @import("std");
-const zlm = @import("zlm");
+const zalgebra = @import("zalgebra");
 
 const log = std.log.scoped(.wavefront_obj);
 
-const vec2 = zlm.vec2;
-const vec3 = zlm.vec3;
-const vec4 = zlm.vec4;
+const Vec2 = zalgebra.Vec2;
+const Vec3 = zalgebra.Vec3;
+const Vec4 = zalgebra.Vec4;
 
-const Vec2 = zlm.Vec2;
-const Vec3 = zlm.Vec3;
-const Vec4 = zlm.Vec4;
+const vec2 = Vec2.new;
+const vec3 = Vec3.new;
+const vec4 = Vec4.new;
 
 test "wavefront-obj" {
     std.testing.refAllDecls(@This());
@@ -141,10 +141,10 @@ pub fn load(
             var vertex = vec4(0, 0, 0, 1);
             while (iter.next()) |part| {
                 switch (state) {
-                    0 => vertex.x = try std.fmt.parseFloat(f32, part),
-                    1 => vertex.y = try std.fmt.parseFloat(f32, part),
-                    2 => vertex.z = try std.fmt.parseFloat(f32, part),
-                    3 => vertex.w = try std.fmt.parseFloat(f32, part),
+                    0 => vertex.data[0] = try std.fmt.parseFloat(f32, part),
+                    1 => vertex.data[1] = try std.fmt.parseFloat(f32, part),
+                    2 => vertex.data[2] = try std.fmt.parseFloat(f32, part),
+                    3 => vertex.data[3] = try std.fmt.parseFloat(f32, part),
                     else => return error.InvalidFormat,
                 }
                 state += 1;
@@ -160,9 +160,9 @@ pub fn load(
             var texcoord = vec3(0, 0, 0);
             while (iter.next()) |part| {
                 switch (state) {
-                    0 => texcoord.x = try std.fmt.parseFloat(f32, part),
-                    1 => texcoord.y = try std.fmt.parseFloat(f32, part),
-                    2 => texcoord.z = try std.fmt.parseFloat(f32, part),
+                    0 => texcoord.data[0] = try std.fmt.parseFloat(f32, part),
+                    1 => texcoord.data[1] = try std.fmt.parseFloat(f32, part),
+                    2 => texcoord.data[2] = try std.fmt.parseFloat(f32, part),
                     else => return error.InvalidFormat,
                 }
                 state += 1;
@@ -178,9 +178,9 @@ pub fn load(
             var normal = vec3(0, 0, 0);
             while (iter.next()) |part| {
                 switch (state) {
-                    0 => normal.x = try std.fmt.parseFloat(f32, part),
-                    1 => normal.y = try std.fmt.parseFloat(f32, part),
-                    2 => normal.z = try std.fmt.parseFloat(f32, part),
+                    0 => normal.data[0] = try std.fmt.parseFloat(f32, part),
+                    1 => normal.data[1] = try std.fmt.parseFloat(f32, part),
+                    2 => normal.data[2] = try std.fmt.parseFloat(f32, part),
                     else => return error.InvalidFormat,
                 }
                 state += 1;
